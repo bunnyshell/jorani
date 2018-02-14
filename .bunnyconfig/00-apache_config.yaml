@@ -1,7 +1,33 @@
 pre_app_deploy:
+ execs:
+  Configure Jorani:
+   name: Configure Jorani
+   command: |
+     #!/usr/bin/env bash
+     . /etc/profile.d/azure_secrets.sh
+     #sudo apt-get install -y apache2
+     #a2enmod rewrite
+     #sudo apt-get install -y php libapache2-mod-php
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}"
+     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}"
+     sudo apt-get -y install mysql-server
+     #php5enmod openssl
+     service apache2 restart
+     apt-get install phpmyadmin
+     MYSQL_DATABASE='lms'
+     MYSQL_USER='root'
+     mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --execute="CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+     mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" -D  ${MYSQL_DATABASE} < sql/lms.sql
+
+     config_file='application/config/database.php'
+     sed -i -- "s/'hostname' => ''/'hostname' => 'localhost'/g" ${config_file}
+     sed -i -- "s/'username' => ''/'username' => '${MYSQL_USER}'/g" ${config_file}
+     sed -i -- "s/'password' => ''/'password' => '${MYSQL_PASSWORD}'/g" ${config_file}
+     sed -i -- "s/'database' => ''/'database' => '${MYSQL_DATABASE}'/g" ${config_file}
+
  files:
-  /etc/apache2/sites-enabled/vhost.conf:
-    name: vhost.conf
+  /etc/apache2/sites-enabled/000-default.conf:
+    name: 000-default.conf
     path: /etc/apache2/sites-enabled/
     mode: "0644"
     owner: root
@@ -20,8 +46,10 @@ pre_app_deploy:
 
       </VirtualHost>
 
+post_app_deploy:
  execs:
-  Remove default apache site:
-   name: Remove default apache site
+  Restart apache:
+   name: Restart apache
    command: |
-     rm -rf /etc/apache2/sites-enabled/000-default.conf
+     #!/usr/bin/env bash
+     service apache2 restart
