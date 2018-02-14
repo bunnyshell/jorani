@@ -12,6 +12,7 @@ pre_app_deploy:
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}"
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}"
      sudo apt-get -y install mysql-server
+     service mysql restart
      #php5enmod openssl
      service apache2 restart
      apt-get install phpmyadmin
