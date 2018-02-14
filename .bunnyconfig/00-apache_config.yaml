@@ -11,7 +11,6 @@ pre_app_deploy:
      apt-get -y install mysql-server
      service mysql restart
      service apache2 restart
-     apt-get install -y phpmyadmin
      MYSQL_DATABASE='lms'
      MYSQL_USER='root'
      mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --execute="CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
