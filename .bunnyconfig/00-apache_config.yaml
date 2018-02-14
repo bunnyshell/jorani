@@ -22,6 +22,9 @@ pre_app_deploy:
      sed -i -- "s/'password' => ''/'password' => '${MYSQL_PASSWORD}'/g" ${config_file}
      sed -i -- "s/'database' => ''/'database' => '${MYSQL_DATABASE}'/g" ${config_file}
 
+     apt install composer
+     composer install
+
  files:
   /etc/apache2/sites-enabled/000-default.conf:
     name: 000-default.conf
