@@ -15,7 +15,7 @@ pre_app_deploy:
      service mysql restart
      #php5enmod openssl
      service apache2 restart
-     apt-get install phpmyadmin
+     apt-get install -y phpmyadmin
      MYSQL_DATABASE='lms'
      MYSQL_USER='root'
      mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --execute="CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
