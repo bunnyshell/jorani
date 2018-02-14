@@ -5,15 +5,11 @@ pre_app_deploy:
    command: |
      #!/usr/bin/env bash
      . /etc/profile.d/azure_secrets.sh
-     #sudo apt-get install -y apache2
-     #a2enmod rewrite
-     #sudo apt-get install -y php libapache2-mod-php
-     sudo apt-get update
-     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}"
-     sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}"
-     sudo apt-get -y install mysql-server
+     apt-get update
+     debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}"
+     debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}"
+     apt-get -y install mysql-server
      service mysql restart
-     #php5enmod openssl
      service apache2 restart
      apt-get install -y phpmyadmin
      MYSQL_DATABASE='lms'
