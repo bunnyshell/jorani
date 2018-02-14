@@ -1,4 +1,4 @@
-pre_app_deploy:
+exec_once:
  execs:
   Configure Jorani:
    name: Configure Jorani
@@ -13,6 +13,7 @@ pre_app_deploy:
      service apache2 restart
      MYSQL_DATABASE='lms'
      MYSQL_USER='root'
+
      mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" --execute="CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
      mysql --user="${MYSQL_USER}" --password="${MYSQL_PASSWORD}" -D  ${MYSQL_DATABASE} < sql/lms.sql
 
