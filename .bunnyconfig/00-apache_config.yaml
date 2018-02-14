@@ -22,7 +22,7 @@ pre_app_deploy:
      sed -i -- "s/'password' => ''/'password' => '${MYSQL_PASSWORD}'/g" ${config_file}
      sed -i -- "s/'database' => ''/'database' => '${MYSQL_DATABASE}'/g" ${config_file}
 
-     apt install composer
+     apt install -y composer
      composer install
 
  files:
