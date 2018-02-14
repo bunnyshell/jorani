@@ -49,4 +49,5 @@ post_app_deploy:
    name: Restart apache
    command: |
      #!/usr/bin/env bash
+     chown -R www-data:www-data /var/www/html
      service apache2 restart
