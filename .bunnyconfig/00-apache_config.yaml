@@ -8,6 +8,7 @@ pre_app_deploy:
      #sudo apt-get install -y apache2
      #a2enmod rewrite
      #sudo apt-get install -y php libapache2-mod-php
+     sudo apt-get update
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password password ${MYSQL_PASSWORD}"
      sudo debconf-set-selections <<< "mysql-server mysql-server/root_password_again password ${MYSQL_PASSWORD}"
      sudo apt-get -y install mysql-server
