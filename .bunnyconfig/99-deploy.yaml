@@ -1,0 +1,32 @@
+pre_app_deploy:
+
+ execs:
+
+  00.Install composer:
+   name: Install Composer
+   command: |
+     if ! test -f /usr/local/bin/composer; then
+       export COMPOSER_HOME=/usr/local/bin/.composer
+       curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+       exit 0
+     fi
+
+  01.Add secrets to php and apache:
+   name: Add secrets to php and apache
+   command: |
+     sed 's/export//g' /etc/profile.d/azure_secrets.sh > /etc/php/7.0/cli/conf.d/50-environment.ini
+     sed 's/export//g' /etc/profile.d/azure_secrets.sh > /etc/php/7.0/apache2/conf.d/50-environment.ini
+
+  02.Change Folder Permission:
+   name: Change Folder Permission
+   command: |
+     chown -R www-data:www-data *
+
+post_app_deploy:
+
+ execs:
+
+  00.Restart Apache:
+   name: Run Apache restart
+   command: |
+     /etc/init.d/apache2 restart
