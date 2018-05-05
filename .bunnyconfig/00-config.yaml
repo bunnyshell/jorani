@@ -7,7 +7,7 @@ exec_once:
      . ${APPLICATION_SECRETS_FILE}
       sql_file='sql/lms.sql'
       sed -i -- "s/lms/${database_name}/g" ${sql_file}
-      mysql --user="${database_user}" --password="${user_password}" -d ${database_name} < ${sql_file}
+      mysql --user="${database_user}" --password="${user_password}" -D ${database_name} < ${sql_file}
 
   Configure Jorani:
    name: Configure Jorani
