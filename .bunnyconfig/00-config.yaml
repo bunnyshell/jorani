@@ -18,9 +18,9 @@ exec_once:
      config_file='application/config/database.php'
      sed -i -- "s/'dsn'\t=>.*/'dsn'\t=> 'mysql:host=localhost;dbname=${database_name}',/g" ${config_file}
      sed -i -- "s/'hostname' =>.*/'hostname' => 'localhost',/g" ${config_file}
-     sed -i -- "s/'username' =>.*/'username' => '${database_user}',/g" ${config_file}
-     sed -i -- "s/'password' =>.*/'password' => '${user_password}',/g" ${config_file}
-     sed -i -- "s/'database' =>.*/'database' => '${database_name}',/g" ${config_file}
+     sed -i -- "s/'username' =>.*/'username' => '""${database_user}""',/g" ${config_file}
+     sed -i -- "s/'password' =>.*/'password' => '""${user_password}""',/g" ${config_file}
+     sed -i -- "s/'database' =>.*/'database' => '""${database_name}""',/g" ${config_file}
 
      openssl genrsa -out assets/keys/private.pem 1024
      openssl rsa -in assets/keys/private.pem -outform PEM -pubout -out assets/keys/public.pem
