@@ -40,5 +40,5 @@ post_app_deploy:
    name: Restart apache
    command: |
      #!/usr/bin/env bash
-     chown -RL www-data:www-data /var/www/html/jorani
+     chown -RL www-data:www-data <%= @app_root %>
      service apache2 restart
